@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .cookie-display {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cookie Name Demo</h1>
+    <p>Enter a name to store in a cookie:</p>
+    <input type="text" id="cookieInput" placeholder="Enter a value">
+    <button onclick="setCookie()">Set Cookie</button>
+
+    <div class="cookie-display" id="cookieDisplay"></div>
+
+    <script>
+        // Function to set a cookie
+        function setCookie() {
+            const value = document.getElementById("cookieInput").value;
+            if (value) {
+                document.cookie = `userValue=${value}; path=/; max-age=${60 * 60 * 24}`; // Cookie valid for 1 day
+                alert("Cookie has been set!");
+                displayCookie();
+            } else {
+                alert("Enter name!");
+            }
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let cookie of cookies) {
+                const [key, val] = cookie.split("=");
+                if (key === name) {
+                    return val;
+                }
+            }
+            return null;
+        }
+
+        // Function to display the cookie value
+        function displayCookie() {
+            const cookieValue = getCookie("userValue");
+            const displayDiv = document.getElementById("cookieDisplay");
+            if (cookieValue) {
+                displayDiv.textContent = `Stored Cookie Value: ${cookieValue}`;
+            } else {
+                displayDiv.textContent = "No cookie set yet!";
+            }
+        }
+
+        // Display the cookie value on page load
+        window.onload = displayCookie;
+    </script>
+</body>
+</html>
